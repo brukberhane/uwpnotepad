@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,12 +34,12 @@ namespace FirstNotepadUWP
 
         private void NameTxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            setNoteStuff();
+            //setNoteStuff();
         }
 
         private void ContentTxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            setNoteStuff();
+            //setNoteStuff();
         }
 
         private void setNoteStuff()
@@ -57,7 +59,24 @@ namespace FirstNotepadUWP
 
             tempNote = (Notes)e.Parameter;
             NameTxtBx.Document.SetText(Windows.UI.Text.TextSetOptions.None, tempNote.Title.TrimEnd());
+            //Load(tempNote.Content);
             ContentTxtBx.Document.SetText(Windows.UI.Text.TextSetOptions.None, tempNote.Content.TrimEnd());
+        }
+
+        private async void Load(string text)
+        {
+            using (var memory = new InMemoryRandomAccessStream())
+            {
+                var dataWriter = new DataWriter(memory);
+
+                dataWriter.WriteString(text);
+
+                await dataWriter.StoreAsync();
+
+                Debug.WriteLine("NoteDetails.xaml.cs: " + text);
+
+                ContentTxtBx.Document.LoadFromStream(Windows.UI.Text.TextSetOptions.FormatRtf, memory);
+            }
         }
 
         private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
