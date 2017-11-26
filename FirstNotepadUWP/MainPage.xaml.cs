@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -130,8 +131,14 @@ namespace FirstNotepadUWP
                 if (myFrame.CanGoBack)
                 {
                     myFrame.GoBack();
+                } else
+                {
+                    //NOTE: This code doesn't work
+                    ReadNoteList rnl = myFrame.Content as ReadNoteList;
+                    rnl.Focus(FocusState.Programmatic);
                 }
-            } else if (!myFrame.CanGoBack)
+            }
+            if (!myFrame.CanGoBack)
             {
                 if (IsCtrlPressed())
                 {
@@ -139,6 +146,11 @@ namespace FirstNotepadUWP
                     {
                         myFrame.Navigate(typeof(AddNote));
                         CheckBackButton();
+                    }
+                    else if (e.Key == Windows.System.VirtualKey.Q)
+                    {
+                        ReadNoteList rnl = myFrame.Content as ReadNoteList;
+                        rnl.RequestSearchFocusfromMain();
                     }
                 }
                 

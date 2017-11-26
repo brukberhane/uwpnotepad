@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -85,14 +86,12 @@ namespace FirstNotepadUWP
         private void txtAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             //filter = RefreshList(filter);
-        }
-
-        private ObservableCollection<Notes> RefreshList(ObservableCollection<Notes> notes)
-        {
-            var filtered = (ObservableCollection<Notes>)filter.Where(i => i.Title == txtAutoSuggestBox.Text.Trim());
-                txtAutoSuggestBox.ItemsSource = filtered;
-            test();
-            return filtered;
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var Auto = (AutoSuggestBox)sender;
+                var Suggestion = new ObservableCollection<Notes>(Db_NotesList.Where(i => i.Title.StartsWith(Auto.Text, StringComparison.OrdinalIgnoreCase)).ToArray());
+                Auto.ItemsSource = Suggestion;
+            }
         }
 
         private async void test()
@@ -103,12 +102,15 @@ namespace FirstNotepadUWP
 
         private void txtAutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            filter = RefreshList(filter);
+            if (args.ChosenSuggestion != null)
+            {
+                this.Frame.Navigate(typeof(NoteDetails), args.ChosenSuggestion);
+            }
         }
 
         private void txtAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-
+            txtAutoSuggestBox.Text = (args.SelectedItem as Notes).Title;
         }
 
         private void listBoxobj_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -158,6 +160,11 @@ namespace FirstNotepadUWP
             var del = (Button)s.Children[1];
 
             del.Visibility = Visibility.Collapsed;
+        }
+
+        public void RequestSearchFocusfromMain()
+        {
+            txtAutoSuggestBox.Focus(FocusState.Programmatic);
         }
     }
 
