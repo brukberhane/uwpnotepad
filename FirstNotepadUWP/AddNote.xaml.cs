@@ -50,10 +50,10 @@ namespace FirstNotepadUWP
 
         private void ContenttxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            //setNoteStuff();
+            setNoteStuff();
         }
 
-        private async void setNoteStuff()
+        private void setNoteStuff()
         {
             string name;
             string content;

@@ -34,12 +34,12 @@ namespace FirstNotepadUWP
 
         private void NameTxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            //setNoteStuff();
+            setNoteStuff();
         }
 
         private void ContentTxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            //setNoteStuff();
+            setNoteStuff();
         }
 
         private void setNoteStuff()

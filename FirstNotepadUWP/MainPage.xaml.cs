@@ -131,7 +131,24 @@ namespace FirstNotepadUWP
                 {
                     myFrame.GoBack();
                 }
+            } else if (!myFrame.CanGoBack)
+            {
+                if (IsCtrlPressed())
+                {
+                    if (e.Key == Windows.System.VirtualKey.A)
+                    {
+                        myFrame.Navigate(typeof(AddNote));
+                        CheckBackButton();
+                    }
+                }
+                
             }
+        }
+
+        private static bool IsCtrlPressed()
+        {
+            var ctrlstate = CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.Control);
+            return ((ctrlstate & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
         }
     }
 }
