@@ -27,10 +27,14 @@ namespace FirstNotepadUWP
     public sealed partial class ReadNoteList : Page
     {
 
+        //Databse helper class instance
         DatabaseHelperClass db;
+        //Global note variable to hold note
         Notes note;
+        //A temporary list of Filtered notes
         ObservableCollection<Notes> filter;
 
+        //A list of notes to be gotten from the databse.
         public ObservableCollection<Notes> Db_NotesList;
 
         public ReadNoteList()

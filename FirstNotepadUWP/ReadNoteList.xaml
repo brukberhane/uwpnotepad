@@ -68,8 +68,7 @@
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                             <TextBlock Name="CreateddateTxt" TextWrapping="Wrap" Text="{Binding CreationDate}" 
                                        FontSize="15" HorizontalAlignment="Right"/>
-                            <Button Content="&#xE107;" Name="delBtn" FontFamily="Segoe MDL2 Assets" FontSize="15" Click="delBtn_Click"
-                                    />
+                            <Button Content="&#xE107;" Name="delBtn" FontFamily="Segoe MDL2 Assets" FontSize="15" Click="delBtn_Click"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

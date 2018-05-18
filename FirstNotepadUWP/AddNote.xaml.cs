@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -29,9 +30,6 @@ namespace FirstNotepadUWP
     {
         Notes tempNote;
         DatabaseHelperClass db = new DatabaseHelperClass();
-        Windows.Storage.Streams.IRandomAccessStream mStream;
-        StorageFile FILE, FILE_BACKUP;
-        StorageFolder folder = ApplicationData.Current.LocalFolder;
         
         
         public AddNote()
@@ -45,47 +43,25 @@ namespace FirstNotepadUWP
 
         private  async void NametxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            setNoteStuff();
+            await SetNoteStuff();
         }
 
-        private void ContenttxtBx_TextChanged(object sender, RoutedEventArgs e)
+        private async void ContenttxtBx_TextChanged(object sender, RoutedEventArgs e)
         {
-            setNoteStuff();
+            await SetNoteStuff();
         }
 
-        private void setNoteStuff()
+        private async Task<int> SetNoteStuff()
         {
             string name;
-            string content;
+            //string content;
             NametxtBx.Document.GetText(Windows.UI.Text.TextGetOptions.None, out name);
-            ContenttxtBx.Document.GetText(Windows.UI.Text.TextGetOptions.None, out content);
+            //ContenttxtBx.Document.GetText(Windows.UI.Text.TextGetOptions.None, out content);
             tempNote.Title = name;
-            tempNote.Content = content;
+            tempNote.Content = await GetContent();
+
             db.UpdateDetails(tempNote);
-
-            /*using (var stream = new InMemoryRandomAccessStream())
-            {
-
-                tempNote.Title = name;
-                ContenttxtBx.Document.SaveToStream(Windows.UI.Text.TextGetOptions.FormatRtf, stream);
-
-                using (var inputStream = stream.GetInputStreamAt(0))
-                {
-                    using (var dataReader = new DataReader(inputStream))
-                    {
-                        await dataReader.LoadAsync((uint)stream.Size);
-
-                        var recievedStrings = dataReader.ReadString((uint)stream.Size);
-                        tempNote.Content = recievedStrings;
-
-                        Debug.WriteLine("AddNote.xaml.cs: " + recievedStrings);
-                    }
-                }
-
-                db.UpdateDetails(tempNote);
-
-            }*/
-
+            return 0;
         }
 
         private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -103,6 +79,29 @@ namespace FirstNotepadUWP
             }
             
         }
+
+        private async Task<string> GetContent()
+        {
+            byte[] bytes;
+
+            using (InMemoryRandomAccessStream ras = new InMemoryRandomAccessStream())
+            {
+                ContenttxtBx.Document.SaveToStream(Windows.UI.Text.TextGetOptions.FormatRtf, ras);
+                //MemoryStream stream = (MemoryStream)ras.AsStreamForRead();
+
+                ras.Seek(0);
+                var dataReader = new DataReader(ras);
+                await dataReader.LoadAsync((uint)ras.Size);
+                bytes = new byte[ras.Size];
+                dataReader.ReadBytes(bytes);
+
+                return System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+               
+            }
+
+            return null;
+        }
+
     }
 }
 
