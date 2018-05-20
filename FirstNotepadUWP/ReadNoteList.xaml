@@ -52,8 +52,8 @@
             <!--<SymbolIcon Symbol="AllApps"/>-->
         </RelativePanel>
 
-        <ListView Name="listBoxobj" 
-                  Grid.Row="1" SelectionChanged="listBoxobj_SelectionChanged" DoubleTapped="listBoxobj_DoubleTapped" >
+        <ListView Name="listBoxobj" IsMultiSelectCheckBoxEnabled="False" KeyUp="listBoxobj_KeyUp"
+                  Grid.Row="1" DoubleTapped="listBoxobj_DoubleTapped" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch" PointerEntered="Grid_PointerEntered" 
@@ -79,6 +79,7 @@
                     <Setter Property="Padding" Value="0"/>
                 </Style>
             </ListView.ItemContainerStyle>
+            
         </ListView>
         
         <!--

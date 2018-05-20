@@ -49,6 +49,13 @@ namespace FirstNotepadUWP
 
             tempNote = (Notes)e.Parameter;
             SetInitialNotes(tempNote);
+
+            this.Focus(FocusState.Programmatic);
+            if (this.FocusState == FocusState.Programmatic)
+            {
+                Debug.WriteLine("NoteDetails: Has focus");
+            }
+            NameTxtBx.Focus(FocusState.Programmatic);
         }
 
         private void Page_KeyDown(object sender, KeyRoutedEventArgs e)

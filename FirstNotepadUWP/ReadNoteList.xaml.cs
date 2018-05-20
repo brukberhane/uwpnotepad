@@ -43,10 +43,7 @@ namespace FirstNotepadUWP
 
             db = new DatabaseHelperClass();
             listBoxobj.DataContext = new Visible() { IsVisible = false };
-        }
-
-        private void listBoxobj_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            
 
         }
 
@@ -119,8 +116,7 @@ namespace FirstNotepadUWP
 
         private void listBoxobj_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(NoteDetails), listBoxobj.SelectedItem);
-            MainPage page = this.Frame.Parent as MainPage;
+            NavigateToDetails();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -169,6 +165,50 @@ namespace FirstNotepadUWP
         public void RequestSearchFocusfromMain()
         {
             txtAutoSuggestBox.Focus(FocusState.Programmatic);
+        }
+
+        public void RequestUpinListfromMain()
+        {
+            listBoxobj.Focus(FocusState.Keyboard);
+
+        }
+
+        public void RequestDownInListFromMain()
+        {
+            listBoxobj.Focus(FocusState.Keyboard);
+        }
+
+        //private async void listBoxobj_KeyDown(object sender, KeyRoutedEventArgs e)
+        //{
+        //    if (e.Key == Windows.System.VirtualKey.Enter)
+        //    {
+        //        NavigateToDetails();
+        //        Debug.WriteLine("Enter key pressed");
+        //    }
+        //    Debug.WriteLine("Pls????\n"+ e.Key.ToString());
+        //}
+
+        public async void NavigateToDetails()
+        {
+            if (listBoxobj.SelectedItem != null)
+            {
+                this.Frame.Navigate(typeof(NoteDetails), listBoxobj.SelectedItem);
+                MainPage page = this.Frame.Parent as MainPage;
+            }
+            else
+            {
+                var dag = new MessageDialog("Please select a note first!");
+                await dag.ShowAsync();
+            }
+        }
+
+        private void listBoxobj_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Debug.WriteLine("ReadNoteList: Enter is pressed");
+                NavigateToDetails();
+            }
         }
     }
 

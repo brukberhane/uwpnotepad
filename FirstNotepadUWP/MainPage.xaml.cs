@@ -142,18 +142,37 @@ namespace FirstNotepadUWP
             {
                 if (IsCtrlPressed())
                 {
+                    Debug.WriteLine("Ctrl is pressed");
                     if (e.Key == Windows.System.VirtualKey.A)
                     {
+                        Debug.WriteLine("Ctrl + A is pressed");
                         myFrame.Navigate(typeof(AddNote));
                         CheckBackButton();
                     }
                     else if (e.Key == Windows.System.VirtualKey.Q)
                     {
+                        Debug.WriteLine("Ctrl + Q is pressed");
                         ReadNoteList rnl = myFrame.Content as ReadNoteList;
                         rnl.RequestSearchFocusfromMain();
                     }
                 }
-                
+
+                if (e.Key == Windows.System.VirtualKey.Up)
+                {
+                    Debug.WriteLine("Up is pressed");
+                    ReadNoteList rnl = myFrame.Content as ReadNoteList;
+                    rnl.RequestUpinListfromMain();
+                }
+
+                if (e.Key == Windows.System.VirtualKey.Down)
+                {
+                    Debug.WriteLine("Down is pressed");
+                    ReadNoteList rnl = myFrame.Content as ReadNoteList;
+                    rnl.RequestDownInListFromMain();
+                }
+
+
+                Debug.WriteLine(e.Key.ToString() + " is pressed");
             }
         }
 
