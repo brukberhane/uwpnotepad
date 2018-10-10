@@ -210,6 +210,11 @@ namespace FirstNotepadUWP
                 NavigateToDetails();
             }
         }
+
+        private void listBoxobj_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class Visible

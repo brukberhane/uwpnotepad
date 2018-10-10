@@ -40,12 +40,12 @@
                             <TextBlock Text="Add Note" FontSize="18" Margin="20,0,0,0"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem Name="deleteall">
+                    <!--<ListBoxItem Name="deleteall">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="Delete"/>
                             <TextBlock Text="Delete All Notes" FontSize="18" Margin="20,0,0,0"/>
                         </StackPanel>
-                    </ListBoxItem>
+                    </ListBoxItem>-->
                 </ListBox>
             </SplitView.Pane>
             <SplitView.Content>

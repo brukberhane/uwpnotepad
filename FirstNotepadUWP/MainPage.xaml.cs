@@ -79,34 +79,35 @@ namespace FirstNotepadUWP
                 myFrame.Navigate(typeof(AddNote));
                 CheckBackButton();
             }
-            else if (deleteall.IsSelected)
-            {
+            //else if (deleteall.IsSelected)
+            //{
 
-               if (!myFrame.CanGoBack)
-                {
-                    var dialog = new MessageDialog("Are you sure you want to delete all your notes?");
-                    dialog.Commands.Add(new UICommand("Yes") { Id = 0 });
-                    dialog.Commands.Add(new UICommand("No") { Id = 1 });
+            //   if (!myFrame.CanGoBack)
+            //    {
+            //        var dialog = new MessageDialog("Are you sure you want to delete all your notes?");
+            //        dialog.Commands.Add(new UICommand("Yes") { Id = 0 });
+            //        dialog.Commands.Add(new UICommand("No") { Id = 1 });
 
-                    var result = await dialog.ShowAsync();
+            //        var result = await dialog.ShowAsync();
 
-                    if (result.Label == "Yes")
-                    {
-                        db.DeleteAllNotes();
-                        var page = (ReadNoteList)myFrame.Content;
-                        var notesList= page.Db_NotesList;
-                        notesList.Clear();
-                    }
-                }
-                else
-                {
-                    var dag = new MessageDialog("You must go to the main page to do this");
-                    await dag.ShowAsync();
-                }
+            //        if (result.Label == "Yes")
+            //        {
+            //            db.DeleteAllNotes();
+            //            var page = (ReadNoteList)myFrame.Content;
+            //            var notesList= page.Db_NotesList;
+            //            notesList.Clear();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        var dag = new MessageDialog("You must go to the main page to do this");
+            //        await dag.ShowAsync();
+            //    }
                 
-                //Probably add something here to clear the observablecollection
+            //    //Probably add something here to clear the observablecollection
 
-            } else if (HamburglerButton.IsSelected)
+            //} 
+            else if (HamburglerButton.IsSelected)
             {
                 mySplitView.IsPaneOpen = !mySplitView.IsPaneOpen;
                 HamburglerButton.IsSelected = false;

@@ -53,7 +53,7 @@
         </RelativePanel>
 
         <ListView Name="listBoxobj" IsMultiSelectCheckBoxEnabled="False" KeyUp="listBoxobj_KeyUp"
-                  Grid.Row="1" DoubleTapped="listBoxobj_DoubleTapped" >
+                  Grid.Row="1" DoubleTapped="listBoxobj_DoubleTapped" SelectionChanged="listBoxobj_SelectionChanged" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch" PointerEntered="Grid_PointerEntered" 
